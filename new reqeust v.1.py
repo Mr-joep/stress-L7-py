@@ -42,4 +42,3 @@ def test_website(url):
 if __name__ == "__main__":
     website_url = input("Enter the website URL to test: ")
     test_website(website_url)
-
