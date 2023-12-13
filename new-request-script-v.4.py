@@ -49,4 +49,4 @@ if __name__ == "__main__":
     asyncio.run(check_website_once(website_url))
 
     # Step 2 and 3: Monitor the website indefinitely
-    asyncio.run(monitor_website(website_url, max_concurrent_requests=1000))
+    asyncio.run(monitor_website(website_url, max_concurrent_requests=100))
