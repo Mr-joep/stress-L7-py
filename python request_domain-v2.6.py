@@ -40,4 +40,3 @@ async def run_requests(max_concurrent_requests):
 
 if __name__ == "__main__":
     asyncio.run(run_requests(MAX_CONCURRENT_REQUESTS))
-#d
