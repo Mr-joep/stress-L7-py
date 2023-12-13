@@ -3,7 +3,15 @@ import asyncio
 import time
 
 DOMAIN_URL = "http://192.168.154.139"  # Replace with the actual domain URL
-MAX_CONCURRENT_REQUESTS = 10  # Replace with your desired number
+MAX_CONCURRENT_REQUESTS = 20000  # Replace with your desired number
+
+async def is_host_up(url):
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                return response.status == 200
+    except aiohttp.ClientError:
+        return False
 
 async def make_request(session):
     try:
@@ -14,6 +22,10 @@ async def make_request(session):
         return False
 
 async def run_requests(max_concurrent_requests):
+    if not await is_host_up(DOMAIN_URL):
+        print(f"The host {DOMAIN_URL} is down. Stopping.")
+        return
+
     start_time = time.time()
     request_count = 0
 
