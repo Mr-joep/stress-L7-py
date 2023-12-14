@@ -12,7 +12,7 @@ class ScriptRunner:
         processes = []
 
         for _ in range(num_instances):
-            process = subprocess.Popen(["python", "request-script-v.6.py"])
+            process = subprocess.Popen(["python", "request-script-v.7.py"])
             processes.append(process)
 
         for process in processes:
