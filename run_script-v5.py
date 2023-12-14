@@ -3,7 +3,7 @@ import time
 import os
 import shutil
 
-def run_request_script(num_times, delay=0.5):
+def run_request_script(num_times, delay=1.2):
     script_name = "request-script-v1.1.py"
     processes = []
 
