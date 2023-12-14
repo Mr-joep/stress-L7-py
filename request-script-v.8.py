@@ -2,6 +2,15 @@ import aiohttp
 import asyncio
 import time
 
+async def check_website_once(url):
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                response.raise_for_status()
+                print(f"Website {url} is online.")
+    except aiohttp.ClientError as e:
+        print(f"Website {url} is down. Error: {e}")
+
 async def make_request(session, url):
     try:
         async with session.get(url) as response:
@@ -22,6 +31,13 @@ async def monitor_website(url, max_concurrent_requests=50):
 
                 time_elapsed = time.time() - start_time
                 if time_elapsed >= 1:
+                    requests_per_second = request_count / time_elapsed
+                    print(f"Requests per second: {requests_per_second:.2f}")
+
+                    # Write to the txt file
+                    with open("requests_log.txt", "a") as file:
+                        file.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')}, {requests_per_second:.2f}\n")
+
                     start_time = time.time()
                     request_count = 0
 
@@ -34,6 +50,9 @@ async def monitor_website(url, max_concurrent_requests=50):
 
 if __name__ == "__main__":
     website_url = "http://192.168.154.139"
+
+    # Step 1: Check if the website is online
+    asyncio.run(check_website_once(website_url))
 
     # Step 2 and 3: Monitor the website indefinitely with increased concurrent requests
     asyncio.run(monitor_website(website_url, max_concurrent_requests=100))

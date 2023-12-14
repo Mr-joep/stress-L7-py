@@ -1,18 +1,26 @@
 import subprocess
 
-def run_script(num_instances):
+def run_request_script(num_times):
+    script_name = "request-script-v.7.py"
     processes = []
-    
-    for _ in range(num_instances):
-        process = subprocess.Popen(["python", "request-script-v.6.py"])
-        processes.append(process)
-    
-    for process in processes:
-        process.wait()
+
+    try:
+        for _ in range(num_times):
+            process = subprocess.Popen(["python", script_name])
+            processes.append(process)
+
+        # Wait for all child processes to finish
+        for process in processes:
+            process.wait()
+
+    except KeyboardInterrupt:
+        print("\nCtrl+C detected. Stopping the child processes.")
+        for process in processes:
+            process.terminate()
 
 if __name__ == "__main__":
     try:
-        num_instances = int(input("Enter the number of times you want to run the script: "))
-        run_script(num_instances)
+        num_times = int(input("Enter the number of times to run the script: "))
+        run_request_script(num_times)
     except ValueError:
-        print("Please enter a valid number.")
+        print("Invalid input. Please enter a valid integer.")
