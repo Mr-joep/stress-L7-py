@@ -1,7 +1,8 @@
 import os
+import re
 import time
 
-def display_new_data(directory_path):
+def display_requests_per_second(directory_path):
     try:
         # Store the last read position for each file
         last_positions = {}
@@ -17,13 +18,15 @@ def display_new_data(directory_path):
                 # Get the last read position for the file
                 last_position = last_positions.get(file_name, 0)
 
-                # Read and display new data from the file
+                # Read and extract the numeric value after "Requests per second:"
                 try:
                     with open(file_path, 'r') as file:
                         file.seek(last_position)
-                        new_data = file.read()
-                        if new_data:
-                            print(f"{new_data}", end="")
+                        file_content = file.read()
+                        match = re.search(r'Requests per second: (\d+(\.\d+)?)', file_content)
+                        if match:
+                            requests_per_second = match.group(1)
+                            print(f"\nRequests per second in {file_name}: {requests_per_second}")
                             # Update the last read position
                             last_positions[file_name] = file.tell()
                 except Exception as e:
@@ -44,5 +47,5 @@ def display_new_data(directory_path):
 # Specify the directory path
 directory_path = "requests_log"
 
-# Display only new data from files in the specified directory every second
-display_new_data(directory_path)
+# Display only "Requests per second" values from files in the specified directory every second
+display_requests_per_second(directory_path)
