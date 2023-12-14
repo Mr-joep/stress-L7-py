@@ -1,7 +1,0 @@
-Requests per second: 10617.45
-Requests per second: 10198.90
-Requests per second: 9816.79
-Requests per second: 10399.95
-Requests per second: 10525.24
-Requests per second: 9058.16
-Requests per second: 10255.38

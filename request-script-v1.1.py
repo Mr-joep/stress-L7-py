@@ -29,7 +29,7 @@ async def monitor_website(url, max_concurrent_requests=50):
         os.makedirs('requests_log')
 
     # Find the next available log file name
-    log_file_name = os.path.join('requests_log', 'requests_log.txt')
+    log_file_name = os.path.join('requests_log', 'requests_log1.txt')
     count = 1
     while os.path.exists(log_file_name):
         count += 1
