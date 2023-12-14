@@ -10,19 +10,18 @@ async def make_request(session, url):
     except aiohttp.ClientError:
         return 0
 
-async def monitor_website(url, max_sessions=10, max_requests_per_session=120):
+async def monitor_website(url, max_concurrent_requests=50):
     start_time = time.time()
     request_count = 0
 
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=max_concurrent_requests)) as session:
             while True:
-                tasks = [make_request(session, url) for _ in range(max_requests_per_session)]
+                tasks = [make_request(session, url) for _ in range(max_concurrent_requests)]
                 request_count += sum(await asyncio.gather(*tasks))
 
                 time_elapsed = time.time() - start_time
                 if time_elapsed >= 1:
-                    print(f"Requests per second: {request_count / time_elapsed:.2f}")
                     start_time = time.time()
                     request_count = 0
 
@@ -36,5 +35,5 @@ async def monitor_website(url, max_sessions=10, max_requests_per_session=120):
 if __name__ == "__main__":
     website_url = "http://192.168.154.139"
 
-    # Step 1: Monitor the website with parallel sessions and requests
-    asyncio.run(monitor_website(website_url, max_sessions=10, max_requests_per_session=100))
+    # Step 2 and 3: Monitor the website indefinitely with increased concurrent requests
+    asyncio.run(monitor_website(website_url, max_concurrent_requests=100))
