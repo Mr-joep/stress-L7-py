@@ -29,11 +29,11 @@ async def monitor_website(url, max_concurrent_requests=50):
         os.makedirs('requests_log')
 
     # Find the next available log file name
-    log_file_name = os.path.join('requests_log', 'requests_log1.txt')
+    log_file_name = os.path.join('requests_log', 'requests_log-1.txt')
     count = 1
     while os.path.exists(log_file_name):
         count += 1
-        log_file_name = os.path.join('requests_log', f"requests_log{count}.txt")
+        log_file_name = os.path.join('requests_log', f"requests_log-{count}.txt")
 
     try:
         async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=max_concurrent_requests)) as session:
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     asyncio.run(check_website_once(website_url))
 
     # Step 2 and 3: Monitor the website indefinitely with increased concurrent requests
-    asyncio.run(monitor_website(website_url, max_concurrent_requests=100))
+    asyncio.run(monitor_website(website_url, max_concurrent_requests=1))

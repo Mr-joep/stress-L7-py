@@ -6,16 +6,13 @@ import glob
 
 def get_latest_request_number():
     log_folder = "requests_log"
-    log_files = glob.glob(os.path.join(log_folder, "requests_log*.txt"))
+    log_files = glob.glob(os.path.join(log_folder, "requests_log-*.txt"))
 
     if log_files:
         latest_log_file = max(log_files, key=os.path.getctime)
         with open(latest_log_file, "r") as file:
-            lines = file.readlines()
-            if lines:
-                # Assuming the number is on the last line of the file
-                last_number = int(lines[-1])
-                return last_number
+            content = file.read()
+            return content
 
     return None
 
@@ -37,10 +34,13 @@ def run_request_script(num_times, delay=1.2):
         for process in processes:
             process.wait()
 
-        # Get and display the latest request number
-        latest_number = get_latest_request_number()
-        if latest_number is not None:
-            print(f"The latest request number is: {latest_number}")
+        # Get and display the contents of each request log file
+        log_folder = "requests_log"
+        log_files = glob.glob(os.path.join(log_folder, "requests_log-*.txt"))
+        for log_file in log_files:
+            with open(log_file, "r") as file:
+                content = file.read()
+                print(f"Contents of {log_file}:\n{content}")
 
     except KeyboardInterrupt:
         pass
