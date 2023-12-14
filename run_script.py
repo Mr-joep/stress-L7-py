@@ -14,7 +14,7 @@ def run_request_script(num_times):
             process.wait()
 
     except KeyboardInterrupt:
-        pass 
+        pass
 
 if __name__ == "__main__":
     try:
