@@ -3,7 +3,7 @@ import time
 import os
 import shutil
 
-def run_scripts(num_request_scripts, num_data_scripts, request_delay=1.2, data_delay=0):
+def run_scripts(num_request_scripts, num_data_scripts, request_delay=1.2):
     request_script_name = "request-script-v1.1.py"
     data_script_name = "data-colection-v.3.py"
 
