@@ -1,3 +1,10 @@
+## Documentation
+* open up request-script-v*.py 
+* edit at the bottom
+```
+website_url = to what you want (IP or domain)
+```
+
 
 **Clone and Install Script**
 
