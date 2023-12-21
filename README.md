@@ -11,6 +11,6 @@ website_url = to what you want (IP or domain)
 ## install
 ```shell script
 git clone https://github.com/Mr-joep/dos-L7-py.git
-cd MHDDoS
+cd dos-L7-py
 pip install -r requirements.txt
 ```
